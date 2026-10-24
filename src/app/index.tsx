@@ -1,4 +1,8 @@
-import React from 'react';
+import InfoCard from '@/components/InfoCard';
+import { colors } from '@/constants/colors';
+import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { TrendingUp } from 'lucide-react-native';
 import {
   Alert,
   Platform,
@@ -8,21 +12,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useRouter } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import InfoCard from '@/components/InfoCard';
-import { colors } from '@/constants/colors';
+import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
 export default function App() {
   const router = useRouter();
 
   const handleInfoCardPress = (title: string, status: 'selesai' | 'proses') => {
-    const detailMessage = `Tugas: ${title}\nStatus: ${status === 'selesai' ? 'Selesai (Completed)' : 'Proses (In Progress)'}`;
+    const detailMessage = `Mata Kuliah: ${title}\nStatus Pengerjaan: ${status === 'selesai' ? 'Selesai (Completed)' : 'Dalam Proses (In Progress)'
+      }`;
 
     if (Platform.OS === 'web') {
-      window.alert(`[Detail Tugas]\n\n${detailMessage}`);
+      window.alert(`[Detail Tugas Akademik]\n\n${detailMessage}`);
     } else {
-      Alert.alert('Detail Tugas', detailMessage, [{ text: 'OK' }]);
+      Alert.alert('Detail Tugas Akademik', detailMessage, [{ text: 'OK' }]);
     }
   };
 
@@ -30,66 +32,105 @@ export default function App() {
     <ScrollView style={styles.screen} contentContainerStyle={styles.container}>
       <Text style={styles.headerTitle}>UTS Lab Pemrograman Mobile</Text>
       <Text style={styles.headerSubtitle}>
-        Universitas Internasional Batam • Semester Ganjil 2026/2027
+        Dashboard Akademik • Semester Ganjil 2026/2027
       </Text>
 
-      {/* Kartu Identitas Mahasiswa */}
-      <View style={styles.card}>
-        <Text style={styles.cardLabel}>Nama Mahasiswa:</Text>
-        <Text style={styles.cardValue}>Fadhlan Limanda</Text>
+      {/* 1. Gradient Frame Card (Aksen #0369a1) Pembungkus 3 Stat Cards */}
+      <View style={styles.heroFrame}>
+        <Svg style={StyleSheet.absoluteFill}>
+          <Defs>
+            <LinearGradient id="heroGradient" x1="0" y1="0" x2="1" y2="1">
+              <Stop offset="0%" stopColor="#0284c7" />
+              <Stop offset="50%" stopColor="#0369a1" />
+              <Stop offset="100%" stopColor="#075985" />
+            </LinearGradient>
+          </Defs>
+          <Rect width="100%" height="100%" rx="16" fill="url(#heroGradient)" />
+        </Svg>
 
-        <Text style={styles.cardLabel}>NPM:</Text>
-        <Text style={styles.cardValue}>2532066</Text>
+        <View style={styles.heroContent}>
+          {/* Header Row: Subtitle & Persentase */}
+          <View style={styles.heroTopRow}>
+            <View>
+              <Text style={styles.heroSubtitle}>Semester Ganjil 2026/2027</Text>
+              <Text style={styles.heroMainValue}>Progres Akademik</Text>
+            </View>
 
-        <Text style={styles.cardLabel}>Mata Kuliah / SKS:</Text>
-        <Text style={styles.cardValue}>Lab. Pemrograman Mobile / 1 SKS</Text>
+            <View style={styles.heroBadgeRight}>
+              <TrendingUp size={16} color="#ffffff" />
+              <Text style={styles.heroPercentage}>67%</Text>
+            </View>
+          </View>
 
-        <Text style={styles.cardLabel}>Status Ujian:</Text>
-        <Text style={styles.statusSuccess}>✓ Sedang Dikerjakan (Aktif)</Text>
+          {/* Progress Bar Line */}
+          <View style={styles.progressTrack}>
+            <View style={styles.progressFill} />
+          </View>
+
+          {/* 3 Inner Stat Cards: Total Tugas, Selesai, dan Proses */}
+          <View style={styles.statsContainer}>
+            <View style={[styles.statCard, styles.statCardTotal]}>
+              <Text style={styles.statNumber}>3</Text>
+              <Text style={styles.statLabel}>Total Tugas</Text>
+            </View>
+
+            <View style={[styles.statCard, styles.statCardSuccess]}>
+              <Text style={[styles.statNumber, styles.textSuccessGlow]}>2</Text>
+              <Text style={styles.statLabel}>Selesai</Text>
+            </View>
+
+            <View style={[styles.statCard, styles.statCardWarning]}>
+              <Text style={[styles.statNumber, styles.textWarningGlow]}>1</Text>
+              <Text style={styles.statLabel}>Proses</Text>
+            </View>
+          </View>
+        </View>
       </View>
 
-      {/* SOAL 1: Custom Reusable Component (InfoCard) dirender minimal 2x */}
+      {/* 2. SOAL 1: Custom Reusable Component (InfoCard) - 3 Mata Kuliah */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>
             Soal 1: Reusable Component (InfoCard)
           </Text>
           <Text style={styles.sectionSub}>
-            Komponen InfoCard dengan dynamic props, conditional styling, & callback
+            Daftar tugas mata kuliah dengan dynamic props & conditional styling
           </Text>
         </View>
 
         <InfoCard
-          title="Jobsheet 05 – Navigasi Expo Router & Dynamic Route"
-          status="selesai"
+          title="Lab. Pemrograman Mobile"
+          status="proses"
           onPress={() =>
-            handleInfoCardPress(
-              'Jobsheet 05 – Navigasi Expo Router & Dynamic Route',
-              'selesai'
-            )
+            handleInfoCardPress('Lab. Pemrograman Mobile', 'proses')
           }
         />
 
         <InfoCard
-          title="UTS Lab Pemrograman Mobile – Implementasi Soal 1 & 2"
-          status="proses"
+          title="Basis Data Lanjut"
+          status="selesai"
           onPress={() =>
-            handleInfoCardPress(
-              'UTS Lab Pemrograman Mobile – Implementasi Soal 1 & 2',
-              'proses'
-            )
+            handleInfoCardPress('Basis Data Lanjut', 'selesai')
+          }
+        />
+
+        <InfoCard
+          title="Rekayasa Perangkat Lunak"
+          status="selesai"
+          onPress={() =>
+            handleInfoCardPress('Rekayasa Perangkat Lunak', 'selesai')
           }
         />
       </View>
 
-      {/* SOAL 2: Navigasi ke Layar Direktori Mahasiswa */}
+      {/* 3. SOAL 2: Navigasi ke Layar Direktori Mahasiswa */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>
             Soal 2: Real-Time Filter & FlatList
           </Text>
           <Text style={styles.sectionSub}>
-            Pencarian data mahasiswa real-time dengan controlled TextInput & FlatList
+            Direktori mahasiswa dengan search bar, filter chips & modal detail
           </Text>
         </View>
 
@@ -104,7 +145,7 @@ export default function App() {
             </View>
             <Text style={styles.navTitle}>Buka Direktori Mahasiswa</Text>
             <Text style={styles.navDesc}>
-              Dataset statis 5 mahasiswa, filter case-insensitive, dan ListEmptyComponent
+              Dataset statis, pencarian real-time case-insensitive, dan ListEmptyComponent
             </Text>
           </View>
           <Text style={styles.navArrow}>→</Text>
@@ -127,8 +168,8 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   headerTitle: {
-    fontSize: 21,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontWeight: '800',
     color: colors.primary,
     marginBottom: 4,
     textAlign: 'center',
@@ -139,46 +180,128 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
-  card: {
-    backgroundColor: colors.surface,
+
+  /* Gradient Frame Card Style */
+  heroFrame: {
+    borderRadius: 16,
+    overflow: 'hidden',
+    marginBottom: 24,
+    elevation: 4,
+    shadowColor: '#0369a1',
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+  },
+  heroContent: {
     padding: 18,
-    borderRadius: 12,
-    width: '100%',
-    borderColor: colors.border,
-    borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 1 },
-    marginBottom: 20,
   },
-  cardLabel: {
+  heroTopRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+  },
+  heroSubtitle: {
     fontSize: 11,
-    color: colors.textMuted,
-    marginTop: 6,
+    fontWeight: '600',
+    color: 'rgba(255, 255, 255, 0.8)',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
-  cardValue: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: colors.text,
+  heroMainValue: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#ffffff',
+    marginTop: 2,
   },
-  statusSuccess: {
-    fontSize: 13,
-    fontWeight: 'bold',
-    color: colors.success,
-    marginTop: 4,
+  heroBadgeRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.18)',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.25)',
   },
+  heroPercentage: {
+    color: '#ffffff',
+    fontWeight: '800',
+    fontSize: 12,
+    marginLeft: 5,
+  },
+  progressTrack: {
+    height: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    borderRadius: 3,
+    marginBottom: 16,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    width: '66.7%',
+    height: '100%',
+    backgroundColor: '#ffffff',
+    borderRadius: 3,
+  },
+
+  /* 3 Inner Stat Cards Inside Gradient Frame */
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    gap: 8,
+  },
+  statCard: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+  },
+  statCardTotal: {
+    backgroundColor: 'rgba(255, 255, 255, 0.14)',
+    borderColor: 'rgba(255, 255, 255, 0.25)',
+  },
+  statCardSuccess: {
+    backgroundColor: 'rgba(16, 185, 129, 0.22)',
+    borderColor: 'rgba(52, 211, 153, 0.4)',
+  },
+  statCardWarning: {
+    backgroundColor: 'rgba(249, 115, 22, 0.22)',
+    borderColor: 'rgba(251, 146, 60, 0.4)',
+  },
+  statNumber: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#ffffff',
+    marginBottom: 2,
+  },
+  textSuccessGlow: {
+    color: '#a7f3d0',
+  },
+  textWarningGlow: {
+    color: '#fed7aa',
+  },
+  statLabel: {
+    fontSize: 10.5,
+    fontWeight: '600',
+    color: 'rgba(255, 255, 255, 0.85)',
+    textAlign: 'center',
+  },
+
+  /* Sections */
   section: {
     width: '100%',
-    marginBottom: 16,
+    marginBottom: 18,
   },
   sectionHeader: {
-    marginBottom: 10,
+    marginBottom: 12,
   },
   sectionTitle: {
     fontSize: 13,
-    fontWeight: 'bold',
+    fontWeight: '800',
     color: colors.textMuted,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
