@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import { colors } from '@/constants/colors';
+import { StatusBar } from 'expo-status-bar';
+import { ChevronRight, GraduationCap, Search, XCircle } from 'lucide-react-native';
+import { useState } from 'react';
 import {
   FlatList,
   Modal,
@@ -10,9 +13,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { ChevronRight, GraduationCap, Search, X, XCircle } from 'lucide-react-native';
-import { colors } from '@/constants/colors';
 
 // 1. Dataset statis didefinisikan di luar komponen utama (minimal 5 item)
 export const DAFTAR_MAHASISWA = [
@@ -65,10 +65,10 @@ export default function DaftarMahasiswa() {
       <View style={styles.header}>
         <View style={styles.headerTitleRow}>
           <GraduationCap size={22} color={colors.primary} />
-          <Text style={styles.headerTitle}>Direktori Mahasiswa</Text>
+          <Text style={styles.headerTitle}>Daftar Mahasiswa</Text>
         </View>
         <Text style={styles.headerSubtitle}>
-          Soal 2: Real-Time Search Filter & FlatList
+          Daftar Mahasiswa yang ada di semester ganjil 2026/2027
         </Text>
 
         {/* 3. Search input bar terikat dengan state keyword (controlled input) */}

@@ -91,10 +91,10 @@ export default function App() {
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>
-            Soal 1: Reusable Component (InfoCard)
+            Daftar Mata Kuliah
           </Text>
           <Text style={styles.sectionSub}>
-            Daftar tugas mata kuliah dengan dynamic props & conditional styling
+            Daftar tugas mata kuliah yang ada pada semester ganjil 2026/2027
           </Text>
         </View>
 
@@ -107,7 +107,7 @@ export default function App() {
         />
 
         <InfoCard
-          title="Basis Data Lanjut"
+          title="Basis Data"
           status="selesai"
           onPress={() =>
             handleInfoCardPress('Basis Data Lanjut', 'selesai')
@@ -127,7 +127,7 @@ export default function App() {
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>
-            Soal 2: Real-Time Filter & FlatList
+            Daftar Mahasiswa
           </Text>
           <Text style={styles.sectionSub}>
             Direktori mahasiswa dengan search bar, filter chips & modal detail
@@ -140,12 +140,9 @@ export default function App() {
           onPress={() => router.push('/DaftarMahasiswa')}
         >
           <View style={styles.navTextContainer}>
-            <View style={styles.badgeWrapper}>
-              <Text style={styles.navBadge}>Soal 2</Text>
-            </View>
             <Text style={styles.navTitle}>Buka Direktori Mahasiswa</Text>
             <Text style={styles.navDesc}>
-              Dataset statis, pencarian real-time case-insensitive, dan ListEmptyComponent
+              Daftar mahasiswa yang ada di semester ganjil 2026/2027
             </Text>
           </View>
           <Text style={styles.navArrow}>→</Text>

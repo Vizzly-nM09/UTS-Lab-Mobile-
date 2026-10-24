@@ -18,7 +18,7 @@ export default function RootLayout() {
         <Stack.Screen
           name="DaftarMahasiswa"
           options={{
-            title: 'Soal 2: Direktori Mahasiswa',
+            title: 'Direktori Mahasiswa',
             headerShown: true,
           }}
         />
