@@ -102,3 +102,11 @@ Pilihan opsi testing:
 npx tsc --noEmit
 npx expo lint
 ```
+
+---
+
+## 📌 Catatan & Tujuan Proyek (Project Purpose)
+
+Repositori ini dikembangkan secara khusus untuk memenuhi penilaian akademik **Ujian Tengah Semester (UTS / Midterm Assignment)** pada mata kuliah **Lab. Pemrograman Mobile (1 SKS)**, Program Studi **Teknologi Informasi**, Fakultas Ilmu Komputer, **Universitas Internasional Batam** (Tahun Akademik 2026/2027).
+
+Seluruh kode sumber, arsitektur komponen, tata kelola berkas, dan dokumentasi ini disusun sebagai bagian dari pengerjaan praktikum serta bahan evaluasi penilaian ujian.
